@@ -68,13 +68,48 @@ out(\@headings, \@table);
 print "\nAfter:\n";
 out(\@headings, \@newtable);
 
+@table = ( [ 'a', 'b', 'c', 1, 10000, 1, 12000 ],
+           [ 'a', 'b', 'c', 2, 20, 2, 24000 ],
+           [ 'a', 'b', 'c', 3, 30, 3, 36000 ],
+           [ 'x', 'y', 'z', 1, 1, 9, 23000 ],
+           [ 'x', 'y', 'z', 2, 2, 8, 34000 ],
+           [ 'x', 'y', 'z', 3, 3, 7, 45000 ],
+         );
+@headings = ( 'A', 'B', 'C', 'P', 'V1', 'V 2', 'V  3' );
+@newtable = pivot( table        => \@table, 
+                      headings     => \@headings, 
+                      fix_columns  => \@fix_cols, 
+                      pivot_column => $pivot_col, 
+                      sum_columns  => \@sum_cols,
+                      layout       => 'vertical',
+                      row_sum      => 'Sum',
+                      row_titles   => 1,
+                      format       => \&format
+                    );
+print "\nAfter (vertical):\n";
+out(\@headings, \@newtable);
+
+
+
 sub out {
   my ($headings, $table) = @_;
 
-	print $_, "\t" foreach @$headings;
-	print "\n\n";
-	foreach (@$table) {
-		print $_, "\t" foreach @$_;
-		print "\n";
-	}
+  print $_, "\t" foreach @$headings;
+  print "\n\n";
+  foreach (@$table) {
+    print $_, "\t" foreach @$_;
+    print "\n";
+  }
 }
+
+sub format {
+  my $v = sprintf('%10.2f', $_[0]);
+
+  my ($num, $dec) = split /\./, $v;
+  $num = reverse $num;
+  $num =~ s/(\d\d\d)(?=\d)(?!\d*\.)/$1./g;
+  $num = reverse $num;
+
+  return "$num,$dec";
+}
+
