@@ -149,7 +149,7 @@ require Exporter;
 @EXPORT = qw(
   pivot
 );
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 #---------------------------------------------------------------------------------------------------------------------
 
@@ -266,7 +266,7 @@ sub pivot_horizontal {
     }
   }
 
-  splice @$headings, $pivot_column, @sum_columns + 1, ($row_titles ? '' : (), sort keys %pivot_cols, $row_sum ? $row_sum : ());
+  splice @$headings, $pivot_column, @sum_columns + 1, ($row_titles ? '' : (), (sort keys %pivot_cols), $row_sum ? $row_sum : ());
   return @newtable;
 }
 
@@ -358,5 +358,9 @@ __END__
 =head1 AUTHOR
 
 Bernd Dulfer <bdulfer@cpan.org>
+
+=head2 With Patches from
+
+Graham TerMarsch
 
 =cut
