@@ -132,24 +132,24 @@ The full function call for the above example is:
 
 =cut
 
-use 5.006;
+use 5.005;
 use strict;
-use warnings;
+use vars qw($VERSION @ISA %EXPORT_TAGS @EXPORT_OK @EXPORT);
 
 require Exporter;
 
-our @ISA = qw(Exporter);
+@ISA = qw(Exporter);
 
-our %EXPORT_TAGS = ( 'all' => [ qw(
+%EXPORT_TAGS = ( 'all' => [ qw(
   pivot
 ) ] );
 
-our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
+@EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
-our @EXPORT = qw(
+@EXPORT = qw(
   pivot
 );
-our $VERSION = '0.03';
+$VERSION = '0.04';
 
 #---------------------------------------------------------------------------------------------------------------------
 
